@@ -269,7 +269,7 @@ class Chan {
 		}
 	}
 
-	loadMessages(client: Client, network: Network) {
+	loadMessages(client: Client, network: Network, to?: number) {
 		if (!this.isLoggable()) {
 			return;
 		}
@@ -286,7 +286,7 @@ class Chan {
 			if (network.irc.network.cap.isEnabled("znc.in/playback")) {
 				// if we do have a message provider we might be able to only fetch partial history,
 				// so delay the cap in this case.
-				requestZncPlayback(this, network, 0);
+				requestZncPlayback(this, network, 0, to);
 			}
 
 			return;
@@ -301,7 +301,7 @@ class Chan {
 
 			if (messages.length === 0) {
 				if (network.irc!.network.cap.isEnabled("znc.in/playback")) {
-					requestZncPlayback(this, network, 0);
+					requestZncPlayback(this, network, 0, to);
 				}
 
 				return;
@@ -320,9 +320,9 @@ class Chan {
 			});
 
 			if (network.irc!.network.cap.isEnabled("znc.in/playback")) {
-				const from = Math.floor(messages[messages.length - 1].time.getTime() / 1000);
+				const from = Math.floor(messages[messages.length - 1].time.getTime() / 1000) + 1;
 
-				requestZncPlayback(this, network, from);
+				requestZncPlayback(this, network, from, to);
 			}
 		} catch (err: any) {
 			log.error(`Failed to load messages for ${client.name}: ${err.toString()}`);
@@ -338,14 +338,26 @@ class Chan {
 	}
 }
 
-function requestZncPlayback(channel: Chan, network: Network, from: number) {
+function requestZncPlayback(channel: Chan, network: Network, from: number, to?: number) {
 	if (!network.irc) {
 		throw new Error(
 			`requestZncPlayback: no irc field on network "${network.name}", this is a bug`
 		);
 	}
 
-	network.irc.raw("ZNC", "*playback", "PLAY", channel.name, from.toString());
+	const raw_data_line = ["ZNC", "*playback", "PLAY", channel.name, from.toString()];
+
+	if (to !== undefined) {
+		if (to === 0) {
+			to = Date.now();
+		}
+
+		to = Math.floor(to / 1000);
+
+		raw_data_line.push(to.toString());
+	}
+
+	network.irc.raw(...raw_data_line);
 }
 
 export default Chan;

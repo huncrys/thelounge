@@ -1,6 +1,7 @@
 import _ from "lodash";
 import crypto from "crypto";
 import IrcFramework, {Client as IRCClient} from "irc-framework";
+import isIpPrivate from "private-ip";
 import Chan, {ChanConfig, Channel} from "./chan";
 import Msg from "./msg";
 import Prefix from "./prefix";
@@ -528,7 +529,9 @@ class Network {
 			const transport = this.irc.connection.transport;
 
 			if (transport.socket) {
-				const isLocalhost = ["127.0.0.1", "::1"].includes(transport.socket.remoteAddress);
+				const isLocalhost =
+					["127.0.0.1", "::1", undefined].includes(transport.socket.remoteAddress) ||
+					isIpPrivate(transport.socket.remoteAddress);
 				const isAuthorized = transport.socket.encrypted && transport.socket.authorized;
 
 				status.connected = transport.isConnected();
