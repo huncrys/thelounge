@@ -22,11 +22,23 @@ export default <IrcEventHandler>function (irc, network) {
 	});
 
 	irc.on("action", function (data) {
+		// Some servers send actions without any nickname
+		if (!data.nick) {
+			data.from_server = true;
+			data.nick = data.hostname || network.host;
+		}
+
 		data.type = MessageType.ACTION;
 		handleMessage(data);
 	});
 
 	irc.on("privmsg", function (data) {
+		// Some servers send privmsgs without any nickname
+		if (!data.nick) {
+			data.from_server = true;
+			data.nick = data.hostname || network.host;
+		}
+
 		data.type = MessageType.MESSAGE;
 		handleMessage(data);
 	});
@@ -108,7 +120,7 @@ export default <IrcEventHandler>function (irc, network) {
 						index: network.addChannel(chan),
 					});
 					client.save();
-					chan.loadMessages(client, network);
+					chan.loadMessages(client, network, data.time);
 				}
 			}
 

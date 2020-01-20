@@ -9,6 +9,7 @@ import Config, {WebIRC} from "../config";
 import STSPolicies from "../plugins/sts";
 import ClientCertificate, {ClientCertificateType} from "../plugins/clientCertificate";
 import Client from "../client";
+import isIpPrivate from "private-ip";
 
 /**
  * List of keys which should be sent to the client by default.
@@ -535,7 +536,10 @@ class Network {
 			const transport = this.irc.connection.transport;
 
 			if (transport.socket) {
-				const isLocalhost = transport.socket.remoteAddress === "127.0.0.1";
+				const isLocalhost =
+					transport.socket.remoteAddress === "127.0.0.1" ||
+					transport.socket.remoteAddress === undefined ||
+					isIpPrivate(transport.socket.remoteAddress);
 				const isAuthorized = transport.socket.encrypted && transport.socket.authorized;
 
 				status.connected = transport.isConnected();

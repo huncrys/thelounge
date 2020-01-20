@@ -73,7 +73,8 @@ const input: PluginInputHandler = function (network, chan, cmd, args) {
 				index: network.addChannel(newChan),
 			});
 			this.save();
-			newChan.loadMessages(this, network);
+
+			newChan.loadMessages(this, network, Date.now());
 		}
 	}
 
