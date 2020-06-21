@@ -16,7 +16,7 @@
 	<% }); %>
 	<style id="user-specified-css"></style>
 
-	<title>The Lounge</title>
+	<title>GoDClan WebChat</title>
 
 	<!-- Browser tab icon -->
 	<link id="favicon" rel="icon" sizes="16x16 32x32 64x64" href="favicon.ico" data-other="img/favicon-alerted.ico" type="image/x-icon">

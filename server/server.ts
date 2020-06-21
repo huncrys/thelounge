@@ -485,6 +485,13 @@ function initializeClient(
 			data.commands = null;
 			data.ignoreList = null;
 
+			if (Config.values.webirc) {
+				data.username = Config.values.defaults.username;
+				data.realname = Config.values.defaults.realname;
+				data.password = Config.values.defaults.password;
+				data.join = Config.values.defaults.join;
+			}
+
 			client.connectToNetwork(data);
 		}
 	});

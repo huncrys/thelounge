@@ -2,6 +2,7 @@ import {IrcEventHandler} from "../../client";
 
 import Msg from "../../models/msg";
 import STSPolicies from "../sts";
+import Config from "../../config";
 
 export default <IrcEventHandler>function (irc, network) {
 	const client = this;
@@ -15,7 +16,10 @@ export default <IrcEventHandler>function (irc, network) {
 	});
 
 	function handleSTS(data, shouldReconnect) {
-		if (!Object.prototype.hasOwnProperty.call(data.capabilities, "sts")) {
+		if (
+			Config.values.webirc ||
+			!Object.prototype.hasOwnProperty.call(data.capabilities, "sts")
+		) {
 			return;
 		}
 
