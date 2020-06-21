@@ -50,7 +50,7 @@ describe("Server", function () {
 		it("should run a web server on " + webURL, async () => {
 			const response = await got(webURL);
 			expect(response.statusCode).to.equal(200);
-			expect(response.body).to.include("<title>The Lounge</title>");
+			expect(response.body).to.include("<title>GoDClan WebChat</title>");
 			expect(response.body).to.include('type="module"');
 		});
 
