@@ -1,4 +1,4 @@
-FROM node:22.13.1-alpine
+FROM node:22-alpine
 
 ENV NODE_ENV=production
 ENV THELOUNGE_HOME="/config"
