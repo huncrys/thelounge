@@ -1,7 +1,22 @@
+spec:
+  inputs:
+    no-cache:
+      type: boolean
+      default: false
+      description: Whether to disable the build cache when building the image.
+---
 variables:
   CI_DOCKERHUB_IMAGE: huncrys/thelounge
 
 include:
-  - component: $CI_SERVER_FQDN/oaklab/ci-templates/oci-publish@8
+  - component: $CI_SERVER_FQDN/oaklab/ci-templates/oci-publish@11
     inputs:
       licenses: MIT
+      platforms:
+        - linux/amd64
+        - linux/arm64
+      cache-from: ["${CI_COMMIT_REF_NAME}"]
+      cache-to: ["${CI_COMMIT_REF_NAME}"]
+      registry-cache: true
+      tags: ["${CI_COMMIT_REF_NAME}", "${CI_COMMIT_SHORT_SHA}"]
+      no-cache: $[[ inputs.no-cache ]]
