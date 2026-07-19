@@ -266,6 +266,8 @@ class Network {
 			this.port = Config.values.defaults.port;
 			this.tls = Config.values.defaults.tls;
 			this.rejectUnauthorized = Config.values.defaults.rejectUnauthorized;
+			this.username = Config.values.defaults.username;
+			this.realname = Config.values.defaults.realname;
 		}
 
 		if (this.host.length === 0) {
