@@ -105,7 +105,7 @@ export default <IrcEventHandler>function (irc, network) {
 						index: network.addChannel(chan),
 					});
 					client.save();
-					chan.loadMessages(client, network);
+					chan.loadMessages(client, network, data.time);
 				}
 			}
 
