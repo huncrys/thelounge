@@ -102,6 +102,13 @@ module.exports = {
 	// This value is set to `"default"` by default.
 	theme: "default",
 
+	// ### `title`
+	//
+	// Set the browser tab title.
+	//
+	// This value is set to `"The Lounge"` by default.
+	title: "The Lounge",
+
 	// ### `prefetch`
 	//
 	// When set to `true`, The Lounge will load thumbnails and site descriptions

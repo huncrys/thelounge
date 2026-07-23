@@ -92,6 +92,7 @@ export type ConfigType = {
 	maxHistory: number;
 	https: Https;
 	theme: string;
+	title: string;
 	prefetch: boolean;
 	disableMediaPreview: boolean;
 	prefetchStorage: boolean;

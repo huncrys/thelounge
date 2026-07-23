@@ -8,6 +8,7 @@ function escapeAttr(str: string): string {
 export function injectServerConfig(html: string): string {
 	const theme = escapeAttr(Config.values.theme);
 	const themeColor = escapeAttr(Config.values.themeColor);
+	const title = escapeAttr(Config.values.title);
 	const stylesheets = packages.getStylesheets();
 
 	const themeLink = `<link id="theme" rel="stylesheet" href="themes/${theme}.css" data-server-theme="${theme}">`;
@@ -22,6 +23,7 @@ export function injectServerConfig(html: string): string {
 
 	return html
 		.replace("</head>", `\t${headInsert}\n\t</head>`)
+		.replace("<!--thelounge-title-->", title)
 		.replace(/<!--thelounge-themecolor-->/g, themeColor)
 		.replace("<!--thelounge-bodyclass-->", Config.values.public ? "public" : "")
 		.replace(
