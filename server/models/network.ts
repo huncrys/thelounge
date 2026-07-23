@@ -267,6 +267,14 @@ class Network {
 			this.port = Config.values.defaults.port;
 			this.tls = Config.values.defaults.tls;
 			this.rejectUnauthorized = Config.values.defaults.rejectUnauthorized;
+			this.username = Config.values.defaults.username;
+			this.realname = Config.values.defaults.realname;
+			this.password = Config.values.defaults.password;
+			this.leaveMessage = Config.values.defaults.leaveMessage;
+			this.commands = [];
+			this.sasl = "";
+			this.saslAccount = "";
+			this.saslPassword = "";
 		}
 
 		if (this.host.length === 0) {

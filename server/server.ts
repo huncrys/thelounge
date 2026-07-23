@@ -477,6 +477,10 @@ function initializeClient(
 			data.commands = null;
 			data.ignoreList = null;
 
+			if (Config.values.lockNetwork) {
+				data.join = Config.values.defaults.join;
+			}
+
 			client.connectToNetwork(data);
 		}
 	});
